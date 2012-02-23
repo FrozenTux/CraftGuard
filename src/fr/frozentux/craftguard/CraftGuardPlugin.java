@@ -44,7 +44,7 @@ public class CraftGuardPlugin extends JavaPlugin{
 					player.sendMessage(ChatColor.GREEN + "[CraftGuard] Configuration reloaded !");
 				}else player.sendMessage(ChatColor.RED + "You don't have permission to do this !");
 			}else{
-				reloadConfig();
+				conf.reloadConf();
 				sendConsoleMessage("[CraftGuard] Configuration reloaded !");
 			}
 			return true;
