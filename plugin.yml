@@ -1,0 +1,9 @@
+name: CraftGuard
+main: fr.frozentux.craftguard.CraftGuardPlugin
+version: 1.2.1
+commands:
+   cg:
+      description: Reload config.
+      usage: /cg <args>
+      permission: craftguard.admin
+      permisison-message: You can't do that
