@@ -26,7 +26,7 @@ public class CraftGuardListeners implements Listener {
 		Player sender = ev.getPlayer();
 		boolean ok = false;
 		boolean inList = (conf.getCheckList().contains(id)) ? true : false;
-		if(inList){
+		if(inList && !sender.hasPermission(conf.getBasePerm() + ".*")){
 			for(int i = 0 ; i<conf.getNomGroupes().size() && !ok ; i++){
 				boolean permSpec = sender.hasPermission(conf.getBasePerm() + "." + conf.getPermissions().get(i));
 				if(permSpec && conf.getListeGroupes().get(i).contains(id)){
@@ -39,11 +39,13 @@ public class CraftGuardListeners implements Listener {
 				}
 			}
 		
-			if(!ok){
-				ev.setCancelled(true);
-				sender.sendMessage(ChatColor.RED + conf.getDenyMessage());
-				if(conf.isLog()) plugin.sendConsoleMessage("[CraftGuard] " + sender.getName() + " tried to craft " + ev.getResult().getType().toString() + " but did not have permission. Craft denied");
-			}
+			
+		}else if(sender.hasPermission(conf.getBasePerm() + ".*"))ok = true;
+		
+		if(!ok){
+			ev.setCancelled(true);
+			sender.sendMessage(ChatColor.RED + conf.getDenyMessage());
+			if(conf.isLog()) plugin.sendConsoleMessage("[CraftGuard] " + sender.getName() + " tried to craft " + ev.getResult().getType().toString() + " but did not have permission. Craft denied");
 		}
 		
 		
