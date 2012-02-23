@@ -39,14 +39,14 @@ public class CraftGuardConfig {
 	}
 	
 	/**
-	 * Méthode d'initialisation externe
+	 * Methode d'initialisation externe
 	 */
 	public void initConf(){
 		loadConf();
 	}
 	
 	/**
-	 * Méthode de réinitialisation externe
+	 * Methode de reinitialisation externe
 	 */
 	public void reloadConf(){
 		plugin.reloadConfig();
@@ -58,16 +58,16 @@ public class CraftGuardConfig {
 	}
 	
 	/**
-	 * Méthode de chargement interne
+	 * Methode de chargement interne
 	 */
 	private void loadConf(){
-		//Set pour récupérer la section de config
+		//Set pour recuperer la section de config
 		AbstractSet<String> set;
 		//System.out.println(plugin.getDataFolder().toString());
 		File f = new File(plugin.getDataFolder().toString() + File.separator + "config.yml");
 		
-		//Ecriture de la config par défaut si aucun groupe défini
-		//TODO Vérifier si ça marche
+		//Ecriture de la config par defaut si aucun groupe defini
+		//TODO Verifier si ça marche
 		if(!f.exists()){
 			plugin.sendConsoleWarning("CraftGuard : Unable to find configuration file, writing defaults...");
 			plugin.getConfig().set("craftguard.default.granted", defaultValues);
@@ -79,23 +79,23 @@ public class CraftGuardConfig {
 		//Tableau qui contient UNE liste d'Ids (en string) a la fois
 		ArrayList<String> prov = new ArrayList<String>();
 		
-		//On récupère les liste de tous les groupes une par une
+		//On recupere les liste de tous les groupes une par une
 		for(int i=0 ; i<set.size() ; i++){
 			ArrayList<Integer> groupeEnCours = new ArrayList<Integer>();
 			if(plugin.getConfig().contains("craftguard." + set.toArray()[i] + ".permission")){
 				nomGroupes.add((String) set.toArray()[i]);
-				permissions.add(plugin.getConfig().getString("craftguard." + set.toArray()[i] + ".permission")); //On récupère la permission
+				permissions.add(plugin.getConfig().getString("craftguard." + set.toArray()[i] + ".permission")); //On recupere la permission
 				listeGroupes.add(groupeEnCours);	//On ajoute la liste aux liste des groupes
 				
 				prov = (ArrayList<String>)plugin.getConfig().getStringList("craftguard." + set.toArray()[i] + ".granted");
 				Iterator<String> it = prov.iterator();
 				
-				//Parcours tous les ids pour les convertir et le cas échéant récupérer les damage values
+				//Parcours tous les ids pour les convertir et le cas echeant recuperer les damage values
 				while(it.hasNext()){
 					String valeur = it.next();
-					//Si une damage value a été précisée
+					//Si une damage value a ete precisee
 					if(valeur.split(":").length == 2){
-						//Si une autre damage value pour cet id dans ce groupe a déjà été précisée
+						//Si une autre damage value pour cet id dans ce groupe a deja ete precisee
 						if(damage.containsKey(nomGroupes.get(i) + ":" + valeur.split(":")[0]))damage.put(nomGroupes.get(i) + ":" + valeur.split(":")[0], damage.get(nomGroupes.get(i) + ":" + valeur.split(":")[0]) + ":" + valeur.split(":")[1]);
 						else damage.put(nomGroupes.get(i) + ":" + valeur.split(":")[0].toString(), valeur.split(":")[1]);
 					}
@@ -103,7 +103,7 @@ public class CraftGuardConfig {
 					groupeEnCours.add(Integer.valueOf(valeur.split(":")[0]));
 				}
 				
-				//On énumère les blocs a checker
+				//On enumere les blocs a checker
 				for(int j = 0 ; j<prov.size() ; j++){
 					if(!checkList.contains(prov.get(j)))checkList.add(Integer.valueOf(prov.get(j).split(":")[0]));				}
 			}else plugin.sendConsoleWarning("[CraftGuard] Group " + set.toArray()[i] + "'s permission was not defined. Ignoring the group.");
@@ -112,7 +112,7 @@ public class CraftGuardConfig {
 		
 		plugin.sendConsoleMessage("[CraftGuard] Succesfully loaded " + set.size() + " groups !");
 		
-		//On charge la config générale
+		//On charge la config generale
 		//Log
 		if (!plugin.getConfig().contains("config.log")){
 			log = false;
