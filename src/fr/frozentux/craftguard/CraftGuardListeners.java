@@ -29,9 +29,7 @@ public class CraftGuardListeners implements Listener {
 		if(inList){
 			for(int i = 0 ; i<conf.getNomGroupes().size() && !ok ; i++){
 				boolean permSpec = sender.hasPermission(conf.getBasePerm() + "." + conf.getPermissions().get(i));
-				boolean permBase = sender.hasPermission(conf.getBasePerm() + ".*");
-				boolean permGen = (permSpec || permBase) ? true : false;
-				if(permGen && conf.getListeGroupes().get(i).contains(id)){
+				if(permSpec && conf.getListeGroupes().get(i).contains(id)){
 					if(conf.getDamage().containsKey(conf.getNomGroupes().get(i) + ":" + id)){
 						byte dId = ev.getResult().getData().getData();
 						for(int j = 0 ; j<conf.getDamage().get(conf.getNomGroupes().get(i) + ":" + id).split(":").length ; j++){
