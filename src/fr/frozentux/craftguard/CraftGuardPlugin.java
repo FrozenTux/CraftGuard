@@ -62,7 +62,9 @@ public class CraftGuardPlugin extends JavaPlugin{
 						ArrayList<Integer> listeAAfficher = conf.getListeGroupes().get(conf.getNomGroupes().indexOf(args[1]));
 						Iterator<Integer> it = listeAAfficher.iterator();
 						while(it.hasNext()){
-							player.sendMessage("- " + Material.getMaterial(it.next()).toString());
+							int id = it.next();
+							if(conf.getDamage().containsKey(args[1] + ":" + id))player.sendMessage("- " + Material.getMaterial(id).toString() + ChatColor.GOLD + " (" + conf.getDamage().get(args[1] + ":" + id) + ")");
+							else player.sendMessage("- " + Material.getMaterial(id).toString());
 						}
 					}else player.sendMessage(ChatColor.RED + "[CraftGuard] Group " + args[1] + " does not exist !");
 				}else player.sendMessage(ChatColor.RED + "You don't have permission to do this !");
@@ -72,7 +74,9 @@ public class CraftGuardPlugin extends JavaPlugin{
 					ArrayList<Integer> listeAAfficher = conf.getListeGroupes().get(conf.getNomGroupes().indexOf(args[1]));
 					Iterator<Integer> it = listeAAfficher.iterator();
 					while(it.hasNext()){
-						sendConsoleMessage("- " + Material.getMaterial(it.next()).toString());
+						int id = it.next();
+						if(conf.getDamage().containsKey(args[1] + ":" + id))sendConsoleMessage("- " + Material.getMaterial(id).toString() + " (" + conf.getDamage().get(args[1] + ":" + id) + ")");
+						else sendConsoleMessage("- " + Material.getMaterial(id).toString());
 					}
 				}else sendConsoleMessage("[CraftGuard] Group " + args[1] + " does not exist !");
 			}
