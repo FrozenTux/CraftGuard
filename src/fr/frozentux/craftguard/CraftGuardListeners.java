@@ -26,6 +26,7 @@ public class CraftGuardListeners implements Listener {
 		Player sender = ev.getPlayer();
 		boolean ok = false;
 		boolean inList = (conf.getCheckList().contains(id)) ? true : false;
+		System.out.println(inList);
 		if(inList && !sender.hasPermission(conf.getBasePerm() + ".*")){
 			for(int i = 0 ; i<conf.getNomGroupes().size() && !ok ; i++){
 				boolean permSpec = sender.hasPermission(conf.getBasePerm() + "." + conf.getPermissions().get(i));
@@ -40,7 +41,7 @@ public class CraftGuardListeners implements Listener {
 			}
 		
 			
-		}else if(sender.hasPermission(conf.getBasePerm() + ".*"))ok = true;
+		}else ok = true;
 		
 		if(!ok){
 			ev.setCancelled(true);
