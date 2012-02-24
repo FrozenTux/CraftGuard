@@ -38,6 +38,7 @@ public class CraftGuardPlugin extends JavaPlugin{
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
+		if(args.length < 1) return false;
 		if(cmd.getName().equals("cg") && args[0].equals("reload")){
 			if(sender instanceof Player){
 				Player player = (Player) sender;
@@ -52,7 +53,7 @@ public class CraftGuardPlugin extends JavaPlugin{
 			}
 			return true;
 		}
-		if(cmd.getName().equals("cg") && args[0].equals("list") && args.length == 2){
+		if(cmd.getName().equals("cg") && args.length == 2 && args[0].equals("list") ){
 			if(sender instanceof Player){
 				Player player = (Player) sender;
 				if(player.hasPermission("craftguard.admin")){
