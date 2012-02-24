@@ -98,13 +98,17 @@ public class CraftGuardConfig {
 						if(damage.containsKey(nomGroupes.get(i) + ":" + valeur.split(":")[0]))damage.put(nomGroupes.get(i) + ":" + valeur.split(":")[0], damage.get(nomGroupes.get(i) + ":" + valeur.split(":")[0]) + ":" + valeur.split(":")[1]);
 						else damage.put(nomGroupes.get(i) + ":" + valeur.split(":")[0].toString(), valeur.split(":")[1]);
 					}
-					//Puis on ajoute l'id a la liste
-					groupeEnCours.add(Integer.valueOf(valeur.split(":")[0]));
+					//Puis on ajoute l'id a la liste si elle n'y est pas deja
+					if(!groupeEnCours.contains(Integer.valueOf(valeur.split(":")[0]))){
+						groupeEnCours.add(Integer.valueOf(valeur.split(":")[0]));
+					}
+					
 				}
 				
 				//On enumere les blocs a checker
 				for(int j = 0 ; j<prov.size() ; j++){
-					if(!checkList.contains(prov.get(j)))checkList.add(Integer.valueOf(prov.get(j).split(":")[0]));				}
+					if(!checkList.contains(prov.get(j)))checkList.add(Integer.valueOf(prov.get(j).split(":")[0]));				
+				}
 			}else plugin.sendConsoleWarning("[CraftGuard] Group " + set.toArray()[i] + "'s permission was not defined. Ignoring the group.");
 			
 		}
