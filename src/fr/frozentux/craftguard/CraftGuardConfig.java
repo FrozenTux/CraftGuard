@@ -67,7 +67,6 @@ public class CraftGuardConfig {
 		File f = new File(plugin.getDataFolder().toString() + File.separator + "config.yml");
 		
 		//Ecriture de la config par defaut si aucun groupe defini
-		//TODO Verifier si ça marche
 		if(!f.exists()){
 			plugin.sendConsoleWarning("CraftGuard : Unable to find configuration file, writing defaults...");
 			plugin.getConfig().set("craftguard.default.granted", defaultValues);

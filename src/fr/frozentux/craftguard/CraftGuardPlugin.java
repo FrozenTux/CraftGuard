@@ -49,6 +49,17 @@ public class CraftGuardPlugin extends JavaPlugin{
 			}
 			return true;
 		}
+		if(cmd.getName().equals("cg") && args[0].equals("list")){
+			if(sender instanceof Player){
+				Player player = (Player) sender;
+				if(player.hasPermission("craftguard.admin")){
+					//Exec ici
+				}else player.sendMessage(ChatColor.RED + "You don't have permission to do this !");
+			}else{
+				//Exec ici
+			}
+			return true;
+		}
 		return false;
 		
 	}
