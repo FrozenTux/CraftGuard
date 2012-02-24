@@ -1,8 +1,11 @@
 package fr.frozentux.craftguard;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -49,15 +52,32 @@ public class CraftGuardPlugin extends JavaPlugin{
 			}
 			return true;
 		}
-		if(cmd.getName().equals("cg") && args[0].equals("list")){
+		if(cmd.getName().equals("cg") && args[0].equals("list") && args.length == 2){
 			if(sender instanceof Player){
 				Player player = (Player) sender;
 				if(player.hasPermission("craftguard.admin")){
-					//Exec ici
+					if(conf.getNomGroupes().contains(args[1])){
+						player.sendMessage("CraftGuard : Content of list " + args[1]);
+						ArrayList<Integer> listeAAfficher = conf.getListeGroupes().get(conf.getNomGroupes().indexOf(args[1]));
+						Iterator<Integer> it = listeAAfficher.iterator();
+						while(it.hasNext()){
+							player.sendMessage("- " + Material.getMaterial(it.next()).toString());
+						}
+					}else player.sendMessage(ChatColor.RED + "[CraftGuard] Group " + args[1] + " does not exist !");
 				}else player.sendMessage(ChatColor.RED + "You don't have permission to do this !");
 			}else{
-				//Exec ici
+				if(conf.getNomGroupes().contains(args[1])){
+					sendConsoleMessage("CraftGuard : Content of list " + args[1]);
+					ArrayList<Integer> listeAAfficher = conf.getListeGroupes().get(conf.getNomGroupes().indexOf(args[1]));
+					Iterator<Integer> it = listeAAfficher.iterator();
+					while(it.hasNext()){
+						sendConsoleMessage("- " + Material.getMaterial(it.next()).toString());
+					}
+				}else sendConsoleMessage("[CraftGuard] Group " + args[1] + " does not exist !");
 			}
+			return true;
+		}else if(args.length != 2){
+			sender.sendMessage("Usage : /cg list <groupname>");
 			return true;
 		}
 		return false;
