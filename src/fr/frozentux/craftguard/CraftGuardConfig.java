@@ -139,6 +139,20 @@ public class CraftGuardConfig {
 		
 	}
 	
+	public void addId(String group, String rawId){
+		ArrayList<Integer> groupeAModifier = listeGroupes.get(nomGroupes.indexOf(group));
+		int id, damageid;
+		id = Integer.valueOf(rawId.split(":")[0]);
+		if(rawId.split(":").length == 2){
+			damageid = Integer.valueOf(rawId.split(":")[1]);
+			if(damage.containsKey(group + ":" + id))damage.put(group + ":" + id, damage.get(group + ":" + id) + ":" + damageid);
+			else damage.put(group + ":" + id, String.valueOf(damageid));
+		}
+		if(!groupeAModifier.contains(id)){
+			groupeAModifier.add(id);
+		}
+	}
+	
 	//Getters
 	public Map<String, String> getDamage() {
 		return damage;
