@@ -81,17 +81,19 @@ public class CraftGuardPlugin extends JavaPlugin{
 				}else sendConsoleMessage("[CraftGuard] Group " + args[1] + " does not exist !");
 			}
 			return true;
-		}else if(args.length != 2){
+		}else if(args[0].equals("list") && args.length != 2){
 			sender.sendMessage("Usage : /cg list <groupname>");
 			return true;
 		}
 		
 		if(cmd.getName().equals("cg") && args.length == 3 && args[0].equals("add")){
 			if(sender.hasPermission("craftguard.admin")){
-				if(conf.getNomGroupes().contains(args[1])){
-					
-				}
-			}
+				if(conf.getNomGroupes().contains(args[1])){ //TODO Ajouter un check pour le second argument
+					conf.addId(args[1], args[2]);
+					this.saveConfig();
+				}else sender.sendMessage("[CraftGuard add] Group does not exist !");
+			}else sender.sendMessage(ChatColor.RED + "You don't have permission for this");
+			return true;
 		}
 		return false;
 		
