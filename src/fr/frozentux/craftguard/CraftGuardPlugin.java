@@ -85,6 +85,14 @@ public class CraftGuardPlugin extends JavaPlugin{
 			sender.sendMessage("Usage : /cg list <groupname>");
 			return true;
 		}
+		
+		if(cmd.getName().equals("cg") && args.length == 3 && args[0].equals("add")){
+			if(sender.hasPermission("craftguard.admin")){
+				if(conf.getNomGroupes().contains(args[1])){
+					
+				}
+			}
+		}
 		return false;
 		
 	}
