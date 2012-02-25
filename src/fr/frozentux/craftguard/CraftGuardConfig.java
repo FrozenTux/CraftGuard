@@ -54,6 +54,7 @@ public class CraftGuardConfig {
 		nomGroupes = new ArrayList<String>();
 		permissions = new ArrayList<String>();
 		checkList = new ArrayList<Integer>();
+		damage = new HashMap<String, String>();
 		loadConf();
 	}
 	
