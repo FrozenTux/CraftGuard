@@ -92,17 +92,7 @@ public class CraftGuardConfig {
 				
 				//Parcours tous les ids pour les convertir et le cas echeant recuperer les damage values
 				while(it.hasNext()){
-					String valeur = it.next();
-					//Si une damage value a ete precisee
-					if(valeur.split(":").length == 2){
-						//Si une autre damage value pour cet id dans ce groupe a deja ete precisee
-						if(damage.containsKey(nomGroupes.get(i) + ":" + valeur.split(":")[0]))damage.put(nomGroupes.get(i) + ":" + valeur.split(":")[0], damage.get(nomGroupes.get(i) + ":" + valeur.split(":")[0]) + ":" + valeur.split(":")[1]);
-						else damage.put(nomGroupes.get(i) + ":" + valeur.split(":")[0].toString(), valeur.split(":")[1]);
-					}
-					//Puis on ajoute l'id a la liste si elle n'y est pas deja
-					if(!groupeEnCours.contains(Integer.valueOf(valeur.split(":")[0]))){
-						groupeEnCours.add(Integer.valueOf(valeur.split(":")[0]));
-					}
+					addId(nomGroupes.get(i), it.next(), false);
 					
 				}
 				
@@ -140,7 +130,7 @@ public class CraftGuardConfig {
 		
 	}
 	
-	public void addId(String group, String rawId){
+	public void addId(String group, String rawId, boolean write){
 		ArrayList<Integer> groupeAModifier = listeGroupes.get(nomGroupes.indexOf(group));
 		int id, damageid;
 		id = Integer.valueOf(rawId.split(":")[0]);
@@ -151,6 +141,12 @@ public class CraftGuardConfig {
 		}
 		if(!groupeAModifier.contains(id)){
 			groupeAModifier.add(id);
+			if(write){
+				ArrayList<String> newList = (ArrayList<String>)plugin.getConfig().getStringList("craftguard." + group + ".granted");
+				newList.add(rawId);
+				plugin.getConfig().set("craftguard." + group + ".granted", newList);
+				plugin.saveConfig();
+			}
 		}
 	}
 	

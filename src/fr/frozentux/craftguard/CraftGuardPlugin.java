@@ -89,8 +89,7 @@ public class CraftGuardPlugin extends JavaPlugin{
 		if(cmd.getName().equals("cg") && args.length == 3 && args[0].equals("add")){
 			if(sender.hasPermission("craftguard.admin")){
 				if(conf.getNomGroupes().contains(args[1])){ //TODO Ajouter un check pour le second argument
-					conf.addId(args[1], args[2]);
-					this.saveConfig();
+					conf.addId(args[1], args[2], true);
 				}else sender.sendMessage("[CraftGuard add] Group does not exist !");
 			}else sender.sendMessage(ChatColor.RED + "You don't have permission for this");
 			return true;
