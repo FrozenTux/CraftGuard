@@ -134,13 +134,15 @@ public class CraftGuardConfig {
 		ArrayList<Integer> groupeAModifier = listeGroupes.get(nomGroupes.indexOf(group));
 		int id, damageid;
 		id = Integer.valueOf(rawId.split(":")[0]);
-		if(rawId.split(":").length == 2){
+		if(rawId.split(":").length == 2  && plugin.isInteger(rawId.split(":")[1])){
 			damageid = Integer.valueOf(rawId.split(":")[1]);
 			if(damage.containsKey(group + ":" + id))damage.put(group + ":" + id, damage.get(group + ":" + id) + ":" + damageid);
 			else damage.put(group + ":" + id, String.valueOf(damageid));
+			rawId = rawId.split(":")[0];
 		}
-		if(!groupeAModifier.contains(id)){
+		if(!groupeAModifier.contains(rawId)){
 			groupeAModifier.add(id);
+			checkList.add(id);
 			if(write){
 				ArrayList<String> newList = (ArrayList<String>)plugin.getConfig().getStringList("craftguard." + group + ".granted");
 				newList.add(rawId);

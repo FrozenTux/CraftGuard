@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,19 +23,20 @@ public class CraftGuardListeners implements Listener {
 	public void onCraftItem(PrepareItemCraftEvent ev){
 		
 		int id = ev.getRecipe().getResult().getTypeId();
-		System.out.println(id);
+		System.out.println("==NEW==\nid " + id);
 		Player sender = (Player)ev.getViewers().get(0);
-		System.out.println(sender.toString());
+		System.out.println("Player" + sender.getName());
 		boolean ok = false;
 		boolean inList = (conf.getCheckList().contains(id)) ? true : false;
-		System.out.println(inList);
 		System.out.println(inList);
 		if(inList && !sender.hasPermission(conf.getBasePerm() + ".*")){
 			for(int i = 0 ; i<conf.getNomGroupes().size() && !ok ; i++){
 				boolean permSpec = sender.hasPermission(conf.getBasePerm() + "." + conf.getPermissions().get(i));
+				System.out.println("perm "+permSpec);
 				if(permSpec && conf.getListeGroupes().get(i).contains(id)){
 					if(conf.getDamage().containsKey(conf.getNomGroupes().get(i) + ":" + id)){
-						int dId = ev.getRecipe().getResult().getTypeId();
+						int dId = ev.getRecipe().getResult().getData().getData();
+						System.out.println("Did" + dId);
 						for(int j = 0 ; j<conf.getDamage().get(conf.getNomGroupes().get(i) + ":" + id).split(":").length ; j++){
 							if(dId == Integer.valueOf(conf.getDamage().get(conf.getNomGroupes().get(i) + ":" + id).split(":")[j]))ok = true;
 						}
