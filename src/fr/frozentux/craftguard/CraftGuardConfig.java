@@ -16,8 +16,11 @@ public class CraftGuardConfig {
 	
 
 	private Map<String, String> damage = new HashMap<String, String>();
+	private Map<Integer, Integer> smeltReference = new HashMap<Integer, Integer>();
 	
 	private String[] defautIntValues = {"22","26","44"};
+	private int[] smeltable = 	{319, 363, 365, 349, 15,  14,  56,  21,  73,  16,  12, 4, 337, 17,  81};
+	private int[] smelted = 	{320, 364, 366, 350, 265, 266, 264, 351, 331, 263, 20, 1, 336, 263, 351};
 	//private int[] damageableBlocks = {6, 17, 18, 44, 351, 35};
 	
 	private ArrayList<ArrayList<Integer>> listeGroupes = new ArrayList<ArrayList<Integer>>();
@@ -25,7 +28,7 @@ public class CraftGuardConfig {
 	private ArrayList<String> permissions = new ArrayList<String>();
 	private ArrayList<Integer> checkList = new ArrayList<Integer>();
 	
-	private boolean log;
+	private boolean log, furnace;
 	
 	private String denyMessage,
 		basePerm;
@@ -35,6 +38,9 @@ public class CraftGuardConfig {
 		//Remplissage de la collection default
 		for(int i = 0 ; i<defautIntValues.length ; i++){
 			defaultValues.add(defautIntValues[i]);
+		}
+		for(int i = 0 ; i<smeltable.length ; i++){
+			smeltReference.put(smeltable[i], smelted[i]);
 		}
 	}
 	
@@ -128,6 +134,12 @@ public class CraftGuardConfig {
 			plugin.saveConfig();
 		}else basePerm = plugin.getConfig().getString("config.baseperm");
 		
+		if (!plugin.getConfig().contains("config.checkfurnaces")){
+			furnace = true;
+			plugin.getConfig().set("config.checkfurnaces", true);
+			plugin.saveConfig();
+		}else furnace = plugin.getConfig().getBoolean("config.checkfurnaces");
+		
 	}
 	
 	public void addId(String group, String rawId, boolean write){
@@ -183,6 +195,14 @@ public class CraftGuardConfig {
 
 	public String getBasePerm() {
 		return basePerm;
+	}
+
+	public boolean isFurnace() {
+		return furnace;
+	}
+
+	public Map<Integer, Integer> getSmeltReference() {
+		return smeltReference;
 	}
 	
 }

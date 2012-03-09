@@ -1,10 +1,14 @@
 package fr.frozentux.craftguard;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.ItemStack;
 
 public class CraftGuardListeners implements Listener {
@@ -46,7 +50,6 @@ public class CraftGuardListeners implements Listener {
 		
 			
 		}else ok = true;
-		
 		if(!ok){
 			ev.getInventory().setResult(new ItemStack(0, 0));
 			sender.sendMessage(ChatColor.RED + conf.getDenyMessage());
@@ -55,4 +58,42 @@ public class CraftGuardListeners implements Listener {
 		
 		
 	}
+	/**
+	 * Control furnage smelting
+	 * @param e	Event to handle
+	 */
+	@EventHandler
+	public void onInventoryClick(InventoryClickEvent e){
+		if(e.getInventory().getType().equals(InventoryType.FURNACE) && conf.isFurnace() && (e.getSlot() == 0 || e.getSlot() == 1)&& !((Player)e.getWhoClicked()).hasPermission(conf.getBasePerm() + ".*")){
+			Player p = (Player) e.getWhoClicked();
+			FurnaceInventory in = ((FurnaceInventory)e.getInventory());
+			int id;
+			if(e.getSlot() == 0 && e.getCursor() != null)id = e.getCursor().getTypeId();
+			else if(e.getSlot() == 1 && e.getInventory().getItem(0) != null)id = e.getInventory().getItem(0).getTypeId();
+			else return;
+			System.out.println(id);
+			int resultId;
+			if(conf.getSmeltReference().containsKey(id)){
+				resultId = conf.getSmeltReference().get(id);
+				boolean inList = (conf.getCheckList().contains(resultId)) ? true : false;
+				boolean ok = false;
+				if(inList){
+					
+					for(int i = 0 ; i<conf.getNomGroupes().size() && !ok ; i++){
+						boolean permSpec = p.hasPermission(conf.getBasePerm() + "." + conf.getPermissions().get(i));
+						if(permSpec && conf.getListeGroupes().get(i).contains(resultId)){
+							ok = true;
+						}
+					}
+				}else ok = true;
+			
+				if(!ok){
+					e.setCancelled(true);
+					p.sendMessage(ChatColor.RED + conf.getDenyMessage());
+					if(conf.isLog()) plugin.sendConsoleMessage("[CraftGuard] " + p.getName() + " tried to smelt " + Material.getMaterial(resultId) + " but did not have permission. Smelting denied");
+				}
+			}
+		}
+	}
 }
+//EOF
