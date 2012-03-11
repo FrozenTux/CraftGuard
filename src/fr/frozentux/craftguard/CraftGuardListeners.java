@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.ItemStack;
 
 public class CraftGuardListeners implements Listener {
@@ -44,12 +43,12 @@ public class CraftGuardListeners implements Listener {
 						for(int j = 0 ; j<conf.getDamage().get(conf.getNomGroupes().get(i) + ":" + id).split(":").length ; j++){
 							if(dId == Integer.valueOf(conf.getDamage().get(conf.getNomGroupes().get(i) + ":" + id).split(":")[j]))ok = true;
 						}
-					}else ok = true;
+					}else ok = conf.isPreventive();
 				}
 			}
 		
 			
-		}else ok = true;
+		}else ok = conf.isPreventive();
 		if(!ok){
 			ev.getInventory().setResult(new ItemStack(0, 0));
 			sender.sendMessage(ChatColor.RED + conf.getDenyMessage());
@@ -66,7 +65,6 @@ public class CraftGuardListeners implements Listener {
 	public void onInventoryClick(InventoryClickEvent e){
 		if(e.getInventory().getType().equals(InventoryType.FURNACE) && conf.isFurnace() && (e.getSlot() == 0 || e.getSlot() == 1)&& !((Player)e.getWhoClicked()).hasPermission(conf.getBasePerm() + ".*")){
 			Player p = (Player) e.getWhoClicked();
-			FurnaceInventory in = ((FurnaceInventory)e.getInventory());
 			int id;
 			if(e.getSlot() == 0 && e.getCursor() != null)id = e.getCursor().getTypeId();
 			else if(e.getSlot() == 1 && e.getInventory().getItem(0) != null)id = e.getInventory().getItem(0).getTypeId();
@@ -85,7 +83,7 @@ public class CraftGuardListeners implements Listener {
 							ok = true;
 						}
 					}
-				}else ok = true;
+				}else ok = conf.isPreventive();
 			
 				if(!ok){
 					e.setCancelled(true);

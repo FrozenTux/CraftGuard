@@ -28,7 +28,7 @@ public class CraftGuardConfig {
 	private ArrayList<String> permissions = new ArrayList<String>();
 	private ArrayList<Integer> checkList = new ArrayList<Integer>();
 	
-	private boolean log, furnace;
+	private boolean log, furnace, preventive;
 	
 	private String denyMessage,
 		basePerm;
@@ -134,14 +134,26 @@ public class CraftGuardConfig {
 			plugin.saveConfig();
 		}else basePerm = plugin.getConfig().getString("config.baseperm");
 		
+		//furnace
 		if (!plugin.getConfig().contains("config.checkfurnaces")){
 			furnace = true;
 			plugin.getConfig().set("config.checkfurnaces", true);
 			plugin.saveConfig();
 		}else furnace = plugin.getConfig().getBoolean("config.checkfurnaces");
 		
+		//preventive
+		if (!plugin.getConfig().contains("config.preventiveallow")){
+			preventive = true;
+			plugin.getConfig().set("config.preventiveallow", true);
+			plugin.saveConfig();
+		}else preventive = plugin.getConfig().getBoolean("config.preventiveallow");
+		
 	}
 	
+	public boolean isPreventive() {
+		return preventive;
+	}
+
 	public void addId(String group, String rawId, boolean write){
 		ArrayList<Integer> groupeAModifier = listeGroupes.get(nomGroupes.indexOf(group));
 		int id, damageid;
