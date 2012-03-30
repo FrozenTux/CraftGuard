@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.ItemStack;
 
 public class CraftGuardListeners implements Listener {
 	
@@ -31,7 +32,6 @@ public class CraftGuardListeners implements Listener {
 			if(e.getSlot() == 0 && e.getCursor() != null)id = e.getCursor().getTypeId();
 			else if(e.getSlot() == 1 && e.getInventory().getItem(0) != null)id = e.getInventory().getItem(0).getTypeId();
 			else return;
-			//System.out.println(id);
 			int resultId;
 			if(conf.getSmeltReference().containsKey(id)){
 				resultId = conf.getSmeltReference().get(id);
@@ -55,18 +55,19 @@ public class CraftGuardListeners implements Listener {
 			}
 		}
 		if((e.getInventory().getType().equals(InventoryType.WORKBENCH)|| e.getInventory().getType().equals(InventoryType.CRAFTING)) && e.getSlot() == 0 && !((Player)e.getWhoClicked()).hasPermission(conf.getBasePerm() + ".*")){
-			int id = e.getInventory().getItem(0).getTypeId();
+			ItemStack objet = e.getInventory().getItem(0);
+			int id;
+			if(objet != null)id = objet.getTypeId();
+			else return;
 			Player sender = (Player)e.getWhoClicked();
 			boolean ok = false;
 			boolean inList = (conf.getCheckList().contains(id)) ? true : false;
 			if(inList && !sender.hasPermission(conf.getBasePerm() + ".*")){
 				for(int i = 0 ; i<conf.getNomGroupes().size() && !ok ; i++){
 					boolean permSpec = sender.hasPermission(conf.getBasePerm() + "." + conf.getPermissions().get(i));
-					//System.out.println("perm "+permSpec);
 					if(permSpec && conf.getListeGroupes().get(i).contains(id)){
 						if(conf.getDamage().containsKey(conf.getNomGroupes().get(i) + ":" + id)){
 							int dId = e.getInventory().getItem(0).getData().getData();
-							//System.out.println("Did" + dId);
 							for(int j = 0 ; j<conf.getDamage().get(conf.getNomGroupes().get(i) + ":" + id).split(":").length ; j++){
 								if(dId == Integer.valueOf(conf.getDamage().get(conf.getNomGroupes().get(i) + ":" + id).split(":")[j]))ok = true;
 							}
