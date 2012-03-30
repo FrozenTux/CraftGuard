@@ -26,7 +26,7 @@ public class CraftGuardListeners implements Listener {
 	 */
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e){
-		if(e.getInventory().getType().equals(InventoryType.FURNACE) && conf.isFurnace() && (e.getSlot() == 0 || e.getSlot() == 1)&& !((Player)e.getWhoClicked()).hasPermission(conf.getBasePerm() + ".*")){
+		if((e.getSlotType().equals(InventoryType.SlotType.CRAFTING) || e.getSlotType().equals(InventoryType.SlotType.FUEL)) && e.getInventory().getType().equals(InventoryType.FURNACE) && conf.isFurnace() && (e.getSlot() == 0 || e.getSlot() == 1)&& !((Player)e.getWhoClicked()).hasPermission(conf.getBasePerm() + ".*")){
 			Player p = (Player) e.getWhoClicked();
 			int id;
 			if(e.getSlot() == 0 && e.getCursor() != null)id = e.getCursor().getTypeId();
@@ -54,7 +54,7 @@ public class CraftGuardListeners implements Listener {
 				}
 			}
 		}
-		if((e.getInventory().getType().equals(InventoryType.WORKBENCH)|| e.getInventory().getType().equals(InventoryType.CRAFTING)) && e.getSlot() == 0 && !((Player)e.getWhoClicked()).hasPermission(conf.getBasePerm() + ".*")){
+		if(e.getSlotType().equals(InventoryType.SlotType.RESULT) && (e.getInventory().getType().equals(InventoryType.WORKBENCH)|| e.getInventory().getType().equals(InventoryType.CRAFTING)) && e.getSlot() == 0 && !((Player)e.getWhoClicked()).hasPermission(conf.getBasePerm() + ".*")){
 			ItemStack objet = e.getInventory().getItem(0);
 			int id;
 			if(objet != null)id = objet.getTypeId();
