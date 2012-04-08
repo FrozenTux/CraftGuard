@@ -26,7 +26,7 @@ public class CraftGuardListeners implements Listener {
 	 */
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e){
-		if((e.getSlotType().equals(InventoryType.SlotType.CRAFTING) || e.getSlotType().equals(InventoryType.SlotType.FUEL)) && e.getInventory().getType().equals(InventoryType.FURNACE) && conf.isFurnace() && (e.getSlot() == 0 || e.getSlot() == 1)&& !((Player)e.getWhoClicked()).hasPermission(conf.getBasePerm() + ".*")){
+		if((e.getSlotType().equals(InventoryType.SlotType.CONTAINER) || e.getSlotType().equals(InventoryType.SlotType.FUEL)) && e.getInventory().getType().equals(InventoryType.FURNACE) && conf.isFurnace() && (e.getSlot() == 0 || e.getSlot() == 1)&& !((Player)e.getWhoClicked()).hasPermission(conf.getBasePerm() + ".*")){
 			Player p = (Player) e.getWhoClicked();
 			int id;
 			if(e.getSlot() == 0 && e.getCursor() != null)id = e.getCursor().getTypeId();
