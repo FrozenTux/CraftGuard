@@ -1,6 +1,7 @@
 name: CraftGuard
+author: FrozenTux
 main: fr.frozentux.craftguard.CraftGuardPlugin
-version: 1.3.3
+version: 1.3.4
 commands:
    cg:
       description: Reload config.
