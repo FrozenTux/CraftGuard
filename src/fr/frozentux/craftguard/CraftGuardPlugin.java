@@ -15,7 +15,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 
 public class CraftGuardPlugin extends JavaPlugin{
-	
 	private Logger log;
 	private CraftGuardConfig conf;
 	private CraftGuardListeners listen;
@@ -95,8 +94,16 @@ public class CraftGuardPlugin extends JavaPlugin{
 			}else sender.sendMessage(ChatColor.RED + "You don't have permission for this");
 			return true;
 		}
-		return false;
 		
+		if(cmd.equals("cg") && sender.hasPermission("craftguard.admin")){
+			sender.sendMessage(ChatColor.BLUE + "CraftGuard : Commands list");
+			sender.sendMessage(ChatColor.BLUE + "==========================");
+			sender.sendMessage(ChatColor.BLUE + "/cg reload  " + ChatColor.GREEN  + "Reloads configuration");
+			sender.sendMessage(ChatColor.BLUE + "/cg add <group> <id>  " + ChatColor.GREEN  + "Adds object <id> to group <group>");
+			sender.sendMessage(ChatColor.BLUE + "/cg list <group>  " + ChatColor.GREEN  + "Lists all objects in group <group>");
+		}
+		
+		return false;
 	}
 	
 	public void sendConsoleMessage(String message){
