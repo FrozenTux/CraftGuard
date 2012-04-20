@@ -37,8 +37,8 @@ public class CraftGuardPlugin extends JavaPlugin{
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
-		if(args.length < 1) return false;
-		if(cmd.getName().equals("cg") && args[0].equals("reload")){
+		
+		if(cmd.getName().equals("cg") && args.length == 1 && args[0].equals("reload")){
 			if(sender instanceof Player){
 				Player player = (Player) sender;
 				System.out.println(player.hasPermission("craftguard.admin"));
@@ -52,6 +52,7 @@ public class CraftGuardPlugin extends JavaPlugin{
 			}
 			return true;
 		}
+		
 		if(cmd.getName().equals("cg") && args.length == 2 && args[0].equals("list") ){
 			if(sender instanceof Player){
 				Player player = (Player) sender;
@@ -80,7 +81,7 @@ public class CraftGuardPlugin extends JavaPlugin{
 				}else sendConsoleMessage("[CraftGuard] Group " + args[1] + " does not exist !");
 			}
 			return true;
-		}else if(args[0].equals("list") && args.length != 2){
+		}else if(args.length != 2 && args.length != 0 && args[0].equals("list")){
 			sender.sendMessage("Usage : /cg list <groupname>");
 			return true;
 		}
@@ -95,12 +96,13 @@ public class CraftGuardPlugin extends JavaPlugin{
 			return true;
 		}
 		
-		if(cmd.equals("cg") && sender.hasPermission("craftguard.admin")){
+		if(cmd.getName().equals("cg")){
 			sender.sendMessage(ChatColor.BLUE + "CraftGuard : Commands list");
 			sender.sendMessage(ChatColor.BLUE + "==========================");
 			sender.sendMessage(ChatColor.BLUE + "/cg reload  " + ChatColor.GREEN  + "Reloads configuration");
 			sender.sendMessage(ChatColor.BLUE + "/cg add <group> <id>  " + ChatColor.GREEN  + "Adds object <id> to group <group>");
 			sender.sendMessage(ChatColor.BLUE + "/cg list <group>  " + ChatColor.GREEN  + "Lists all objects in group <group>");
+			return true;
 		}
 		
 		return false;
