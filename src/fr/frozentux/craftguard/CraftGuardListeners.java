@@ -20,12 +20,10 @@ public class CraftGuardListeners implements Listener {
 		this.plugin = plugin;
 		this.conf = conf;
 	}
-	/**
-	 * Control furnage smelting
-	 * @param e	Event to handle
-	 */
+	
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e){
+		//Furnace
 		if((e.getSlotType().equals(InventoryType.SlotType.CONTAINER) || e.getSlotType().equals(InventoryType.SlotType.FUEL)) && e.getInventory().getType().equals(InventoryType.FURNACE) && conf.isFurnace() && (e.getSlot() == 0 || e.getSlot() == 1)&& !((Player)e.getWhoClicked()).hasPermission(conf.getBasePerm() + ".*")){
 			Player p = (Player) e.getWhoClicked();
 			int id;
@@ -54,6 +52,8 @@ public class CraftGuardListeners implements Listener {
 				}
 			}
 		}
+		
+		//Craft
 		if(e.getSlotType().equals(InventoryType.SlotType.RESULT) && (e.getInventory().getType().equals(InventoryType.WORKBENCH)|| e.getInventory().getType().equals(InventoryType.CRAFTING)) && e.getSlot() == 0 && !((Player)e.getWhoClicked()).hasPermission(conf.getBasePerm() + ".*")){
 			ItemStack objet = e.getInventory().getItem(0);
 			int id;
@@ -71,12 +71,12 @@ public class CraftGuardListeners implements Listener {
 							for(int j = 0 ; j<conf.getDamage().get(conf.getNomGroupes().get(i) + ":" + id).split(":").length ; j++){
 								if(dId == Integer.valueOf(conf.getDamage().get(conf.getNomGroupes().get(i) + ":" + id).split(":")[j]))ok = true;
 							}
-						}else ok = conf.isPreventive();
+						}else ok = true;
 					}
 				}
 			
 				
-			}else ok = conf.isPreventive();
+			}else ok = (sender.hasPermission(conf.getBasePerm() + ".*")) ? true : conf.isPreventive();
 			if(!ok){
 				e.setCancelled(true);
 				sender.sendMessage(ChatColor.RED + conf.getDenyMessage());

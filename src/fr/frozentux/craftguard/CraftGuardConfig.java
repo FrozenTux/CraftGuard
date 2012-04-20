@@ -148,6 +148,7 @@ public class CraftGuardConfig {
 			plugin.saveConfig();
 		}else preventive = plugin.getConfig().getBoolean("config.preventiveallow");
 		
+		System.out.println(preventive);
 	}
 	
 	public boolean isPreventive() {
