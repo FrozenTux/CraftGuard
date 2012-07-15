@@ -19,8 +19,8 @@ public class CraftGuardConfig {
 	private Map<Integer, Integer> smeltReference = new HashMap<Integer, Integer>();
 	
 	private String[] defautIntValues = {"22","26","44"};
-	private int[] smeltable = 	{319, 363, 365, 349, 15,  14,  56,  21,  73,  16,  12, 4, 337, 17,  81};
-	private int[] smelted = 	{320, 364, 366, 350, 265, 266, 264, 351, 331, 263, 20, 1, 336, 263, 351};
+	private int[] smeltable = 	{5, 319, 363, 365, 349, 15,  14,  56,  21,  73,  16,  12, 4, 337, 17,  81};
+	private int[] smelted = 	{1, 320, 364, 366, 350, 265, 266, 264, 351, 331, 263, 20, 1, 336, 263, 351};
 	//private int[] damageableBlocks = {6, 17, 18, 44, 351, 35};
 	
 	private ArrayList<ArrayList<Integer>> listeGroupes = new ArrayList<ArrayList<Integer>>();

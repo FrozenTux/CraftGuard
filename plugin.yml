@@ -4,7 +4,7 @@ main: fr.frozentux.craftguard.CraftGuardPlugin
 version: 1.3.5
 commands:
    cg:
-      description: Reload config.
+      description: CraftGuard admin command.
       usage: /cg <args>
       permission: craftguard.admin
-      permisison-message: You can't do that
+      permisison-message: Permission denied.
