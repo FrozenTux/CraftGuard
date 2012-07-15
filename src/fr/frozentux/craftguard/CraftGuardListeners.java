@@ -27,24 +27,17 @@ public class CraftGuardListeners implements Listener {
 		if((e.getSlotType().equals(InventoryType.SlotType.CONTAINER) || e.getSlotType().equals(InventoryType.SlotType.FUEL) || e.getSlotType().equals(InventoryType.SlotType.QUICKBAR)) && e.getInventory().getType().equals(InventoryType.FURNACE) && conf.isFurnace() && !((Player)e.getWhoClicked()).hasPermission(conf.getBasePerm() + ".*")){
 			Player p = (Player) e.getWhoClicked();
 			int id;
-			int boucle; //DEBUG
-			System.out.println(e.isShiftClick());
 			if(e.isShiftClick()){
 				id = e.getCurrentItem().getTypeId();
-				plugin.getLogger().info("Ca marche ! Id : " + id);
-				boucle = 1;
 			}else if(e.getSlot() == 0 || e.getSlot() == 1){
 				if(e.getSlot() == 0 && e.getCursor() != null){
 					id = e.getCursor().getTypeId();
-					boucle = 2;
 				}
 				else if(e.getSlot() == 1 && e.getInventory().getItem(0) != null){
 					id = e.getInventory().getItem(0).getTypeId();
-					boucle = 3;
 				}
 				else return;
 			}else return;
-			System.out.println(id + ";" + boucle);
 			int resultId;
 			if(conf.getSmeltReference().containsKey(id)){
 				resultId = conf.getSmeltReference().get(id);
