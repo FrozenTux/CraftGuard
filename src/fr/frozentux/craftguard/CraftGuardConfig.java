@@ -21,11 +21,10 @@ public class CraftGuardConfig {
 	private String[] defautIntValues = {"22","26","44"};
 	private int[] smeltable = 	{5, 319, 363, 365, 349, 15,  14,  56,  21,  73,  16,  12, 4, 337, 17,  81};
 	private int[] smelted = 	{1, 320, 364, 366, 350, 265, 266, 264, 351, 331, 263, 20, 1, 336, 263, 351};
-	//private int[] damageableBlocks = {6, 17, 18, 44, 351, 35};
 	
 	private ArrayList<ArrayList<Integer>> listeGroupes = new ArrayList<ArrayList<Integer>>();
 	private ArrayList<String> nomGroupes = new ArrayList<String>();
-	private ArrayList<String> permissions = new ArrayList<String>();
+	private HashMap<String, String> permissions = new HashMap<String, String>();
 	private ArrayList<Integer> checkList = new ArrayList<Integer>();
 	
 	private boolean log, furnace, preventive;
@@ -58,7 +57,7 @@ public class CraftGuardConfig {
 		plugin.reloadConfig();
 		listeGroupes = new ArrayList<ArrayList<Integer>>();
 		nomGroupes = new ArrayList<String>();
-		permissions = new ArrayList<String>();
+		permissions = new HashMap<String, String>();
 		checkList = new ArrayList<Integer>();
 		damage = new HashMap<String, String>();
 		loadConf();
@@ -89,8 +88,8 @@ public class CraftGuardConfig {
 		for(int i=0 ; i<set.size() ; i++){
 			ArrayList<Integer> groupeEnCours = new ArrayList<Integer>();
 			if(plugin.getConfig().contains("craftguard." + set.toArray()[i] + ".permission")){
-				permissions.add(plugin.getConfig().getString("craftguard." + set.toArray()[i] + ".permission")); //On recupere la permission
-			}else permissions.add((String) set.toArray()[i]);
+				permissions.put((String) set.toArray()[i], plugin.getConfig().getString("craftguard." + set.toArray()[i] + ".permission")); //On recupere la permission
+			}else permissions.put((String) set.toArray()[i], (String) set.toArray()[i]);
 			nomGroupes.add((String) set.toArray()[i]);
 				
 			listeGroupes.add(groupeEnCours);	//On ajoute la liste aux liste des groupes
@@ -202,8 +201,8 @@ public class CraftGuardConfig {
 		return listeGroupes;
 	}
 
-	public ArrayList<String> getPermissions() {
-		return permissions;
+	public String getListPermission(String name) {
+		return permissions.get(name);
 	}
 
 	public ArrayList<Integer> getCheckList() {

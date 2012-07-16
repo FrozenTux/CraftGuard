@@ -46,7 +46,7 @@ public class CraftGuardListeners implements Listener {
 				if(inList){
 					
 					for(int i = 0 ; i<conf.getNomGroupes().size() && !ok ; i++){
-						boolean permSpec = p.hasPermission(conf.getBasePerm() + "." + conf.getPermissions().get(i));
+						boolean permSpec = p.hasPermission(conf.getBasePerm() + "." + conf.getListPermission(conf.getNomGroupes().get(i)));
 						if(permSpec && conf.getListeGroupes().get(i).contains(resultId)){
 							ok = true;
 						}
@@ -72,7 +72,7 @@ public class CraftGuardListeners implements Listener {
 			boolean inList = (conf.getCheckList().contains(id)) ? true : false;
 			if(inList && !sender.hasPermission(conf.getBasePerm() + ".*")){
 				for(int i = 0 ; i<conf.getNomGroupes().size() && !ok ; i++){
-					boolean permSpec = sender.hasPermission(conf.getBasePerm() + "." + conf.getPermissions().get(i));
+					boolean permSpec = sender.hasPermission(conf.getBasePerm() + "." + conf.getListPermission(conf.getNomGroupes().get(i)));
 					if(permSpec && conf.getListeGroupes().get(i).contains(id)){
 						if(conf.getDamage().containsKey(conf.getNomGroupes().get(i) + ":" + id)){
 							int dId = e.getInventory().getItem(0).getData().getData();
