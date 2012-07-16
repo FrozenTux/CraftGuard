@@ -89,41 +89,42 @@ public class CraftGuardConfig {
 		for(int i=0 ; i<set.size() ; i++){
 			ArrayList<Integer> groupeEnCours = new ArrayList<Integer>();
 			if(plugin.getConfig().contains("craftguard." + set.toArray()[i] + ".permission")){
-				nomGroupes.add((String) set.toArray()[i]);
 				permissions.add(plugin.getConfig().getString("craftguard." + set.toArray()[i] + ".permission")); //On recupere la permission
-				listeGroupes.add(groupeEnCours);	//On ajoute la liste aux liste des groupes
+			}else permissions.add((String) set.toArray()[i]);
+			nomGroupes.add((String) set.toArray()[i]);
 				
-				prov = (ArrayList<String>)plugin.getConfig().getStringList("craftguard." + set.toArray()[i] + ".granted");
+			listeGroupes.add(groupeEnCours);	//On ajoute la liste aux liste des groupes
 				
-				Iterator<String> it = prov.iterator();
+			prov = (ArrayList<String>)plugin.getConfig().getStringList("craftguard." + set.toArray()[i] + ".granted");
 				
-				//Parcours tous les ids pour les convertir et le cas echeant recuperer les damage values
-				while(it.hasNext()){
-					addId(nomGroupes.get(i), it.next(), false);
-				}
+			Iterator<String> it = prov.iterator();
+				
+			//Parcours tous les ids pour les convertir et le cas echeant recuperer les damage values
+			while(it.hasNext()){
+				addId(nomGroupes.get(i), it.next(), false);
+			}
 				
 				
-				//On enumere les blocs a checker
-				for(int j = 0 ; j<prov.size() ; j++){
-					if(!checkList.contains(prov.get(j)))checkList.add(Integer.valueOf(prov.get(j).split(":")[0]));				
-				}
+			//On enumere les blocs a checker
+			for(int j = 0 ; j<prov.size() ; j++){
+				if(!checkList.contains(prov.get(j)))checkList.add(Integer.valueOf(prov.get(j).split(":")[0]));				
+			}
 				
-				if(plugin.getConfig().contains("craftguard." + set.toArray()[i] + ".inheritance")){
-					String inheritance = plugin.getConfig().getString("craftguard." + set.toArray()[i] + ".inheritance");
+			if(plugin.getConfig().contains("craftguard." + set.toArray()[i] + ".inheritance")){
+				String inheritance = plugin.getConfig().getString("craftguard." + set.toArray()[i] + ".inheritance");
 					
-					int index = nomGroupes.indexOf(inheritance);
-					ArrayList<Integer> liste = listeGroupes.get(index);
-					Iterator<Integer> iter = liste.iterator();
-					while(iter.hasNext()){
-						int id = iter.next();
-						listeGroupes.get(i).add(id);
-						if(damage.containsKey(inheritance + ":" + id)){
-							damage.put(nomGroupes.get(i) + ":" + id, damage.get(inheritance + ":" + id));
-						}
+				int index = nomGroupes.indexOf(inheritance);
+				ArrayList<Integer> liste = listeGroupes.get(index);
+				Iterator<Integer> iter = liste.iterator();
+				while(iter.hasNext()){
+					int id = iter.next();
+					listeGroupes.get(i).add(id);
+					if(damage.containsKey(inheritance + ":" + id)){
+						damage.put(nomGroupes.get(i) + ":" + id, damage.get(inheritance + ":" + id));
 					}
-					
 				}
-			}else plugin.sendConsoleWarning("[CraftGuard] Group " + set.toArray()[i] + "'s permission was not defined. Ignoring the group.");
+					
+			}
 			
 		}
 		
